@@ -13,7 +13,8 @@ Author: Kenny Chan
 4. What do you expect to happen if we run our puppeteer tests with the field “headless” set to true?
    If we run our puppeteer tests with headless set to true, the tests would run but it wouldn't display on the browser's UI
 5. What would your beforeAll callback look like if you wanted to start from the settings page before every test case?
-   ```beforeAll(async() =>{
+   ```
+      beforeAll(async() =>{
        await page.goto('http://127.0.0.1:5500'); 
        await page.click('img');
        });
