@@ -2,9 +2,9 @@
 export const router = {};
 
 const body = document.body;
-const headerText = document.querySelector('header > h1');
-let main = document.querySelector('main');
-let singleEntry = document.querySelector('entry-page');
+const headerText = document.querySelector("header > h1");
+let main = document.querySelector("main");
+let singleEntry = document.querySelector("entry-page");
 
 /**
  * Set the state for the new page
@@ -14,52 +14,54 @@ let singleEntry = document.querySelector('entry-page');
  */
 router.setState = (state, statePopped, entryNum) => {
   switch (state) {
-    case 'settings':
+    case "settings":
       entryPage(false);
       settingsPage(true);
       break;
-    case 'entry':
+    case "entry":
       entryPage(true, entryNum);
       break;
     default:
       homePage();
   }
 
-  if(!statePopped && window.location.hash != `#${state}`) {
+  if (!statePopped && window.location.hash != `#${state}`) {
     pushToHistory(state, entryNum);
   }
-}
+};
 
 /**
  * @param {boolean} goTo true if you are going to this page, false if unsetting the page
  */
 function settingsPage(goTo) {
   if (goTo) {
-    body.classList.add('settings');
-    headerText.innerHTML = 'Settings';
+    body.classList.add("settings");
+    headerText.innerHTML = "Settings";
   } else {
-    body.classList.remove('settings');
-    headerText.innerHTML = 'Journal Entries';
+    body.classList.remove("settings");
+    headerText.innerHTML = "Journal Entries";
   }
 }
 
 /**
- * 
+ *
  * @param {boolean} goTo  true if you are going to this page, false if unsetting the page
  * @param {number} entryNum if goTo is true, number of the entry to render
  */
 function entryPage(goTo, entryNum) {
   if (goTo) {
-    body.classList.remove('settings');
+    body.classList.remove("settings");
     singleEntry.parentNode.removeChild(singleEntry);
-    singleEntry = document.createElement('entry-page');
-    body.classList.add('single-entry');
+    singleEntry = document.createElement("entry-page");
+    body.classList.add("single-entry");
     headerText.innerHTML = `Entry ${entryNum}`;
-    singleEntry.entry = Array.from(document.querySelector('main').childNodes)[entryNum - 1].entry;
-    main.insertAdjacentElement('afterend', singleEntry);
+    singleEntry.entry = Array.from(document.querySelector("main").childNodes)[
+      entryNum - 1
+    ].entry;
+    main.insertAdjacentElement("afterend", singleEntry);
   } else {
-    body.classList.remove('single-entry');
-    headerText.innerHTML = 'Journal Entries';
+    body.classList.remove("single-entry");
+    headerText.innerHTML = "Journal Entries";
   }
 }
 
@@ -75,17 +77,21 @@ function homePage() {
  * Push a new state to the history stack
  * @param {string} state The new page to set the state of
  * @param {number} entryNum if state is 'entry', then entryNum is the num
-*/
+ */
 export function pushToHistory(state, entryNum) {
   switch (state) {
-    case 'settings':
-      history.pushState({ page: 'settings' }, '', './#settings');
+    case "settings":
+      history.pushState({ page: "settings" }, "", "./#settings");
       break;
-    case 'entry':
-      history.pushState({ page: `entry${entryNum}` }, '', `./#entry${entryNum}`);
+    case "entry":
+      history.pushState(
+        { page: `entry${entryNum}` },
+        "",
+        `./#entry${entryNum}`
+      );
       break;
     default:
-      history.pushState({}, '', './');
+      history.pushState({}, "", "./");
   }
   return history;
 }
